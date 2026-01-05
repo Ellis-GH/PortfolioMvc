@@ -26,7 +26,8 @@ namespace MvcPortfolio.Controllers
                 {
                     Ticker = g.Key,
                     Quantity = g.Sum(t => t.Buy ? t.Quantity : -t.Quantity),
-                    RIC = g.Sum(t => t.Buy ? t.Cost : -t.Cost)
+                    RIC = g.Sum(t => t.Buy ? t.Cost : -t.Cost),
+                    CurrentValue = 3
                 })
                 .ToListAsync();
 
