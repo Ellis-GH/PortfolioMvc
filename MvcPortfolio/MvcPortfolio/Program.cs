@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MvcPortfolio.Data;
+using MvcPortfolio.Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MvcPortfolioContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MvcPortfolioContext") ?? throw new InvalidOperationException("Connection string 'MvcPortfolioContext' not found.")));
+builder.Services.AddHttpClient<MarketPriceService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

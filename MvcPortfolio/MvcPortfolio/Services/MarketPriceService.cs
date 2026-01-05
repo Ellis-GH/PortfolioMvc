@@ -1,7 +1,8 @@
-﻿using System.Globalization;
+﻿using MvcPortfolio.Models;
+using System.Globalization;
 using System.Text.Json;
 
-namespace MvcInvest.Services
+namespace MvcPortfolio.Services
 {
     public class MarketPriceService
     {
@@ -12,6 +13,7 @@ namespace MvcInvest.Services
             _httpClient = httpClient;
         }
 
+
         public async Task<decimal> GetCurrentPriceAsync(string ticker, string exchange)
         {
             string apiKey = "RVXOF6QX9557RFJU"; 
@@ -19,7 +21,7 @@ namespace MvcInvest.Services
                 $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY" +
                 $"&symbol={ticker}.{exchange}&outputsize=compact&apikey={apiKey}";
 
-            //Console.WriteLine(url);
+            Console.WriteLine(url);
 
             using HttpClient client = new HttpClient();
             using HttpResponseMessage response = await client.GetAsync(url);
@@ -42,14 +44,23 @@ namespace MvcInvest.Services
                 .GetString();
 
             decimal finalValue = decimal.Parse(closePriceString, CultureInfo.InvariantCulture);
-            //Console.WriteLine(document.RootElement.ToString());
+            Console.WriteLine(document.RootElement.ToString());
             return finalValue;
         }
 
         /*
-        public async Task<Dictionary<string, decimal>> GetPricesAsync(IEnumerable<string> tickers)
+        public async Task<Dictionary<string, decimal>> GetCurrentPricesAsync(IEnumerable<string> tickers, IEnumerable<string> exchanges)
         {
-            
+            string apiKey = "RVXOF6QX9557RFJU";
+            string url =
+                $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY" +
+                $"&symbol={ticker}.{exchange}&outputsize=compact&apikey={apiKey}";
+
+            //Console.WriteLine(url);
+
+            using HttpClient client = new HttpClient();
+            using HttpResponseMessage response = await client.GetAsync(url);
+
             // 1. Convert tickers to API format
             var symbols = string.Join(",", tickers);
 
@@ -63,7 +74,8 @@ namespace MvcInvest.Services
             var json = await response.Content.ReadAsStringAsync();
             
             return ParsePrices(json);
-        } */
+        } 
+        */
 
         private Dictionary<string, decimal> ParsePrices(string json)
         {

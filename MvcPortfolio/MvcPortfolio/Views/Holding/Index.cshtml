@@ -39,6 +39,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CurrentValue)
             </td>
+            <td>
+                <a asp-action="UpdatePrice" asp-route-id="@item.Ticker.TickerString">Update Price</a>
+            </td>
         </tr>
 }
     </tbody>
