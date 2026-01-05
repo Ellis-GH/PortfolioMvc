@@ -17,6 +17,7 @@ namespace MvcPortfolio.Data
         public DbSet<MvcPortfolio.Models.Ticker> Ticker { get; set; } = default!;
 
         public DbSet<MvcPortfolio.Models.Exchange> Exchange { get; set; } = default!;
+        public DbSet<MvcPortfolio.Models.Transaction> Transaction { get; set; } = default!;
 
         
     }
