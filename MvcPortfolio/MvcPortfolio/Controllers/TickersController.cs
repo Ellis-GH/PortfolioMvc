@@ -67,6 +67,12 @@ namespace MvcPortfolio.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            var exchanges = _context.Exchange
+                .OrderBy(e => e.ExchangeString)
+                .ToList();
+            ViewBag.ExchangeList = new SelectList(exchanges, "ExchangeString", "ExchangeString");
+
             return View(ticker);
         }
 
@@ -83,6 +89,12 @@ namespace MvcPortfolio.Controllers
             {
                 return NotFound();
             }
+
+            var exchanges = _context.Exchange
+                .OrderBy(e => e.ExchangeString)
+                .ToList();
+            ViewBag.ExchangeList = new SelectList(exchanges, "ExchangeString", "ExchangeString");
+
             return View(ticker);
         }
 
@@ -118,6 +130,22 @@ namespace MvcPortfolio.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            Console.WriteLine("This failed!");
+
+            foreach (var entry in ModelState)
+            {
+                foreach (var error in entry.Value.Errors)
+                {
+                    Console.WriteLine($"{entry.Key}: {error.ErrorMessage}");
+                }
+            }
+
+            var exchanges = _context.Exchange
+                .OrderBy(e => e.ExchangeString)
+                .ToList();
+            ViewBag.ExchangeList = new SelectList(exchanges, "ExchangeString", "ExchangeString");
+
             return View(ticker);
         }
 

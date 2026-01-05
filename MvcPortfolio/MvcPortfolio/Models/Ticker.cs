@@ -15,7 +15,7 @@ namespace MvcPortfolio.Models
         [StringLength(30)]
         [Display(Name = "Exchange")]
         public string ExchangeString {  get; set; }
-        public virtual Exchange Exchange { get; set; } //Navigation property
+        public virtual Exchange? Exchange { get; set; } //Navigation property
 
         public string Name { get; set; }
 

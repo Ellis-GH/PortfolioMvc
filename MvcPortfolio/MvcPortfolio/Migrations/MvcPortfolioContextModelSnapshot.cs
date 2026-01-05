@@ -41,7 +41,7 @@ namespace MvcPortfolio.Migrations
 
                     b.HasKey("ExchangeString");
 
-                    b.ToTable("Exchange");
+                    b.ToTable("Exchange", (string)null);
                 });
 
             modelBuilder.Entity("MvcPortfolio.Models.Ticker", b =>
@@ -74,7 +74,7 @@ namespace MvcPortfolio.Migrations
 
                     b.HasIndex("ExchangeString");
 
-                    b.ToTable("Ticker");
+                    b.ToTable("Ticker", (string)null);
                 });
 
             modelBuilder.Entity("MvcPortfolio.Models.Ticker", b =>

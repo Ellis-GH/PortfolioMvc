@@ -20,7 +20,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="ExchangeString" class="control-label"></label>
-                <input asp-for="ExchangeString" class="form-control" />
+                <!-- <input asp-for="ExchangeString" class="form-control" /> -->
+                <select asp-for="ExchangeString" class="form-control" asp-items="ViewBag.ExchangeList">
+                    <option value="">-- Select Exchange --</option>
+                </select>
                 <span asp-validation-for="ExchangeString" class="text-danger"></span>
             </div>
             <div class="form-group">
