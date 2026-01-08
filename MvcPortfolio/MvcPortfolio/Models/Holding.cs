@@ -16,7 +16,7 @@ namespace MvcPortfolio.Models
 
         [Display(Name = "Average Cost Basis")]
         [NotMapped]
-        public decimal ACB { get; set; }
+        public decimal ACB { get; set; } //Calculated with total costs, not prices I think
 
         [Display(Name = "Current Value")]
         [NotMapped]
@@ -34,10 +34,10 @@ namespace MvcPortfolio.Models
         [Display(Name = "Time Weighted Return")]
         [DisplayFormat(DataFormatString = "{0:P2}")]
         [NotMapped]
-        public decimal TWR { get; set; }
+        public decimal TWR { get; set; } //Calculated with total costs, not prices I think
 
         [DisplayFormat(DataFormatString = "{0:P2}")]
         [NotMapped]
-        public double XIRR { get; set; }
+        public double XIRR { get; set; } //Calculated with total costs, not prices I think
     }
 }

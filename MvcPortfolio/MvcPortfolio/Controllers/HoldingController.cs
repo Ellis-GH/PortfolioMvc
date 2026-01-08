@@ -114,25 +114,65 @@ namespace MvcPortfolio.Controllers
             return rate;
         }
 
-        public static decimal CalculateTWR(List<(DateTime Date, decimal Amount, decimal Quantity)> cashFlows)
+        public static decimal CalculateTWR(List<(DateTime Date, decimal Amount, decimal Quantity)> transactions)
         {
-            decimal startValue = cashFlows[0].Amount;
+            /*
+            decimal startValue = transactions[0].Amount; //Initial value of the holding = the cost paid for it
             decimal endValue;
-            decimal holdingQuantity = cashFlows[0].Quantity;
+            decimal holdingQuantity = transactions[0].Quantity; //Initial quantity of the holding = the quantity bought
 
-            decimal TWR = 0;
-
-            for (int i = 1; i < cashFlows.Count ; i++)
+            decimal TWR = 1;
+            
+            for (int i = 1; i < transactions.Count ; i++) //For each transaction
             {
-                decimal priceAtThatMoment = Math.Abs(cashFlows[i].Amount) / cashFlows[i].Quantity;
-                endValue = holdingQuantity * priceAtThatMoment;
-                TWR += (endValue - startValue) / startValue;
+                Console.WriteLine("Starting value: " + startValue + " holdingQuantity: " + holdingQuantity + " amount: " + transactions[i].Amount);
 
-                holdingQuantity += cashFlows[i].Amount > 0 ? cashFlows[i].Quantity : -cashFlows[i].Quantity;
-                startValue = priceAtThatMoment * holdingQuantity;
+                decimal priceAtThatMoment = Math.Abs(transactions[i].Amount) / transactions[i].Quantity; //The price at the moment/moment b4
+                endValue = holdingQuantity * priceAtThatMoment; //Value of holding at period ending at moment of this transaction
+
+                if (startValue != 0)
+                {
+                    TWR *= (endValue - startValue) / startValue; //Time Weighted Return multiplied in
+                }
+                else
+                {
+                    Console.WriteLine("Transaction: " + i + " has a start value of 0! " + transactions[i].Amount + " Holding quantity is: " + holdingQuantity);
+                }
+
+                holdingQuantity += transactions[i].Amount > 0 ? transactions[i].Quantity : -transactions[i].Quantity; //New quantity determined
+                startValue = priceAtThatMoment * holdingQuantity; //New value calced for start of new period
             }
 
             return (1 + TWR);
+            */
+            decimal twrFactor = 1m;
+
+            decimal holdingQty = transactions[0].Quantity;
+            decimal lastPrice = Math.Abs(transactions[0].Amount) / transactions[0].Quantity;
+            decimal startValue = holdingQty * lastPrice;
+
+            for (int i = 1; i < transactions.Count; i++)
+            {
+                var tx = transactions[i];
+
+                decimal price = Math.Abs(tx.Amount) / tx.Quantity;
+                decimal endValue = holdingQty * price;
+
+                // Sub-period return (BEFORE cash flow)
+                if (startValue != 0)
+                {
+                    decimal periodReturn = (endValue - startValue) / startValue;
+                    twrFactor *= (1 + periodReturn);
+                }
+
+                // Apply cash flow (after return calculation)
+                holdingQty += tx.Amount < 0 ? tx.Quantity : -tx.Quantity;
+
+                startValue = holdingQty * price;
+                lastPrice = price;
+            }
+
+            return twrFactor - 1;
         }
         
         public async Task<IActionResult> UpdatePrice(string id)
