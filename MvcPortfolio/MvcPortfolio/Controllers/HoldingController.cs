@@ -87,6 +87,8 @@ namespace MvcPortfolio.Controllers
                 };
             }).ToList();
 
+            ViewBag.APICalls = await _marketPriceService.GetCallCount();
+
             return View(holdings);
             //return View(await mvcPortfolioContext.ToListAsync());
         }
@@ -194,7 +196,7 @@ namespace MvcPortfolio.Controllers
                 return NotFound(); //Wrong response
             }
 
-            ticker.Price = currentPrice / ticker.Exchange.RatioToOne;
+            ticker.Price = currentPrice / ticker.RatioToOne;
             ticker.LastUpdated = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();

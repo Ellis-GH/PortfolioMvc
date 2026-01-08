@@ -15,9 +15,58 @@ namespace MvcPortfolio.Services
             _httpClient = httpClient;
         }
 
+        public async Task<bool> IncrementCallCount()
+        {
+            string text = await File.ReadAllTextAsync("CallCounter.txt");
+            string[] parts = text.Split(' ');  // split by space
+
+            int count = int.Parse(parts[0]) + 1;   // first part is the number
+            string datePart = parts.Length > 1 ? parts[1] : null;  // second part (optional)
+
+            if (DateTime.TryParse(datePart, out DateTime date))
+            {
+                Console.WriteLine(date);
+            }
+            else
+            {
+                Console.WriteLine("Invalid date format");
+            }
+
+            /*
+                        string text = await File.ReadAllTextAsync("callCounter.txt");
+                        int count = int.Parse(text.Trim()) + 1;
+                        await File.WriteAllTextAsync("CallCounter.txt", count.ToString() + DateTime.Now.Date);
+            */
+            if(date != DateTime.Now.Date)
+            {
+                Console.WriteLine(date + " and " + DateTime.Now.Date);
+                count = 1;
+            }
+
+
+            await File.WriteAllTextAsync("CallCounter.txt", count.ToString() + " " + DateTime.Now.Date);
+
+            return true;
+        }
+
+        public async Task<int> GetCallCount()
+        {
+            /*
+            string text = await File.ReadAllTextAsync("callCounter.txt");
+            int count = int.Parse(text.Trim());
+            */
+            string text = await File.ReadAllTextAsync("CallCounter.txt");
+            string[] parts = text.Split(' ');  // split by space
+
+            int count = int.Parse(parts[0]);   // first part is the number
+
+            return count;
+        }
 
         public async Task<decimal> GetCurrentPriceAsync(string ticker, string exchange)
         {
+            IncrementCallCount();
+
             string apiKey = "RVXOF6QX9557RFJU"; 
             string url =
                 $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY" +

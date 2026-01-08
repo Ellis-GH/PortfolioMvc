@@ -15,7 +15,7 @@ namespace MvcPortfolio.Models
         [Required]
         public string Currency { get; set; }
 
-        [Required]
-        public decimal RatioToOne { get; set; }
+        //[Required]
+        //public decimal RatioToOne { get; set; }
     }
 }

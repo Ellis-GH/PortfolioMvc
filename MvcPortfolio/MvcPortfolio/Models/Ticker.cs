@@ -30,5 +30,9 @@ namespace MvcPortfolio.Models
         [Display(Name = "Last Updated")]
         [DataType(DataType.Date)]
         public DateTime LastUpdated { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal RatioToOne { get; set; }
     }
 }
