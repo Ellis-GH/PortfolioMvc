@@ -16,11 +16,24 @@
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.CurrentValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ACB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalGain)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.RIC)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CurrentValue)
+                @Html.DisplayNameFor(model => model.XIRR)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TWR)
+            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -34,10 +47,22 @@
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.CurrentValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ACB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalGain)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.RIC)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CurrentValue)
+                @Html.DisplayFor(modelItem => item.XIRR)
+            </td>  
+            <td>
+                @Html.DisplayFor(modelItem => item.TWR)
             </td>
             <td>
                 <a asp-action="UpdatePrice" asp-route-id="@item.Ticker.TickerString">Update Price</a>

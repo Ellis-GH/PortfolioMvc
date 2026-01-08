@@ -14,20 +14,30 @@ namespace MvcPortfolio.Models
         [NotMapped]
         public decimal Quantity { get; set; }
 
+        [Display(Name = "Average Cost Basis")]
+        [NotMapped]
+        public decimal ACB { get; set; }
+
+        [Display(Name = "Current Value")]
+        [NotMapped]
+        public decimal CurrentValue { get; set; }
+
+        [Display(Name = "Gain on ACB")]
+        [DisplayFormat(DataFormatString = "{0:P2}")]
+        [NotMapped]
+        public decimal TotalGain { get; set; }
+
         [Display(Name = "Remaining Invested Capital")]
         [NotMapped]
         public decimal RIC { get; set; }
 
-        [NotMapped]
-        public decimal CurrentValue { get; set; }
-
-        [NotMapped]
-        public decimal TotalGain { get; set; }
-
+        [Display(Name = "Time Weighted Return")]
+        [DisplayFormat(DataFormatString = "{0:P2}")]
         [NotMapped]
         public decimal TWR { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:P2}")]
         [NotMapped]
-        public decimal XIRR { get; set; }
+        public double XIRR { get; set; }
     }
 }
