@@ -72,19 +72,30 @@ namespace MvcPortfolio.Controllers
                 //decimal TempTWR = CalculateTWR(cashFlows);
 
                 // Add terminal cash flow: today's market value
-                cashFlows.Add((DateTime.Today, g.Quantity * g.Ticker.Price, g.Quantity));
-
-                return new Holding
+                if (g.Quantity != 0)
                 {
-                    Ticker = g.Ticker,
-                    Quantity = g.Quantity,
-                    CurrentValue = g.Quantity * g.Ticker.Price,
-                    ACB = (g.ACBCostSum / g.ACBQuantSum) * g.Quantity, // returns double
-                    TotalGain = ((g.Quantity * g.Ticker.Price) / ((g.ACBCostSum / g.ACBQuantSum) * g.Quantity)) - 1, //(1 - (ACB / CV)) * 100
-                    RIC = g.RIC,
-                    XIRR = CalculateXIRR(cashFlows), // returns double
-                    TWR = CalculateTWR(cashFlows)
-                };
+                    cashFlows.Add((DateTime.Today, g.Quantity * g.Ticker.Price, g.Quantity));
+
+
+                    return new Holding
+                    {
+                        Ticker = g.Ticker,
+                        Quantity = g.Quantity,
+                        CurrentValue = g.Quantity * g.Ticker.Price,
+                        ACB = (g.ACBCostSum / g.ACBQuantSum) * g.Quantity, // returns double
+                        TotalGain = ((g.Quantity * g.Ticker.Price) / ((g.ACBCostSum / g.ACBQuantSum) * g.Quantity)) - 1, //(1 - (ACB / CV)) * 100
+                        RIC = g.RIC,
+                        XIRR = CalculateXIRR(cashFlows), // returns double
+                        TWR = CalculateTWR(cashFlows)
+                    };
+                }
+                else
+                {
+                    return new Holding
+                    {
+
+                    };
+                }
             }).ToList();
 
             ViewBag.APICalls = await _marketPriceService.GetCallCount();
