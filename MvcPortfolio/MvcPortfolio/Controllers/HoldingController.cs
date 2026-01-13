@@ -166,23 +166,27 @@ namespace MvcPortfolio.Controllers
 
             for (int i = 1; i < transactions.Count; i++)
             {
+                
                 var tx = transactions[i];
 
-                decimal price = Math.Abs(tx.Amount) / tx.Quantity;
-                decimal endValue = holdingQty * price;
-
-                // Sub-period return (BEFORE cash flow)
-                if (startValue != 0)
+                if (tx.Quantity != 0)
                 {
-                    decimal periodReturn = (endValue - startValue) / startValue;
-                    twrFactor *= (1 + periodReturn);
+                    decimal price = Math.Abs(tx.Amount) / tx.Quantity;
+                    decimal endValue = holdingQty * price;
+
+                    // Sub-period return (BEFORE cash flow)
+                    if (startValue != 0)
+                    {
+                        decimal periodReturn = (endValue - startValue) / startValue;
+                        twrFactor *= (1 + periodReturn);
+                    }
+
+                    // Apply cash flow (after return calculation)
+                    holdingQty += tx.Amount < 0 ? tx.Quantity : -tx.Quantity;
+
+                    startValue = holdingQty * price;
+                    lastPrice = price;
                 }
-
-                // Apply cash flow (after return calculation)
-                holdingQty += tx.Amount < 0 ? tx.Quantity : -tx.Quantity;
-
-                startValue = holdingQty * price;
-                lastPrice = price;
             }
 
             return twrFactor - 1;
